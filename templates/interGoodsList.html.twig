@@ -1,0 +1,92 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<style>
+.invisible {
+display: none;
+}
+</style>
+<script>
+function showFilters() {
+	document.getElementById('filters').setAttribute('class', '');
+	document.getElementById('showf').setAttribute('class', 'invisible');
+	document.getElementById('hidef').setAttribute('class', 'btn btn-lg btn-danger');
+}
+function hideFilters() {
+	document.getElementById('filters').setAttribute('class', 'invisible');
+	document.getElementById('showf').setAttribute('class', 'btn btn-lg btn-success');
+	document.getElementById('hidef').setAttribute('class', 'invisible');
+}
+</script>
+
+<div align="center" style="padding: 5%;">
+<div style="margin-bottom: 1%">
+<button class="btn btn-lg btn-success" onclick="showFilters()" id="showf">Показать фильтры</button> <button class="invisible" onclick="hideFilters()" id="hidef">Скрыть фильтры</button>
+<div id="filters" class="invisible">
+<form method="post" action="">
+<div class="container">
+<div class="row">
+<div class="col-sm">
+<p><b>Размер</b></p>
+{% for size in sizes %}<p><input type="checkbox" name="size[]" value="{{ size['size'] }}"> {{ size['size'] }}{% if size['size']==false %} Не указано {% endif %}</p>{% endfor %}
+</div>
+<div class="col-sm">
+<p><b>Коллекция</b></p>
+{% for col in cols %}<p><input type="checkbox" name="col[]" value="{{ col['collection'] }}"> {{ col['collection'] }} {% if col['collection']==false %} Не указано {% endif %}</p>{% endfor %}
+</div>
+<div class="col-sm">
+<p><b>Цвет</b></p>
+{% for color in colors %}<p><input type="checkbox" name="color[]" value="{{ color['color'] }}"> {{ color['color'] }} {% if color['color']==false %} Не указано {% endif %}</p>{% endfor %}
+</div>
+</div>
+</div>
+<input type="submit" class="btn btn-lg btn-success" value="Применить фильтр">
+</div>
+</div>
+</form>
+<div class="card-columns">
+{% for good in goods %}
+<div class="card" style="width: 18rem;">
+{% set photo = good.photo|json_arr() %}
+{% if photo==true %}
+  <img class="card-img-top" width="300px" src="/static/{{ photo[0] }}">
+{% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ good.name }}</h5>
+    <p class="card-text"><h2>{{ good.price }} грн</h2></p>
+	{% if good.short==true %}<p>{{good.short}}</p>{% endif %}
+    <a href="/good/{{ good.id }}" class="btn btn-success">Купить</a>
+  </div>
+</div>
+{% endfor %}
+</div>
+<p><i>30 товаров на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/goods/{{ sex }}/{{ params }}/"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/goods/{{ sex }}/{{ params }}/?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/goods/{{ sex }}/{{ params }}/?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+{% endif %}
+</div>

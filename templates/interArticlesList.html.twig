@@ -1,0 +1,52 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 5%;">
+<div class="container" style="margin-top: 1%">
+{% for article in articles %}
+  <div class="row">
+    <div class="col-sm-4">
+	{% set photo=article.photo|json_arr() %}
+     <img width="300px" height="175px" src="/static/{{ photo[0] }}">
+	</div>
+    <div class="col-7">
+	<div align="left">
+      <a href="/article/{{ article.id }}"><h3>{{ article.title }}</h3></a>
+	  <p>{{ article.short }}</p>
+	</div>
+    </div>
+  </div>
+  </br>
+{% endfor %}
+</div>
+<p><i>15 статей на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/articles"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/articles?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/articles?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/articles?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/articles?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/articles?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/articles?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/articles?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/articles?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/articles?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+{% endif %}
+</div>

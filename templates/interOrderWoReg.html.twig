@@ -1,0 +1,26 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 10%;">
+{% if error==true %}
+{% if error==1 %}
+<div class="alert alert-danger" role="alert">
+  Неправильное заполнение!
+</div>
+{% endif %}
+{% endif %}
+<form method="post" action="/order/withoutreg/proceed">
+<input name="email" maxlength="32" class="form-control" placeholder="E-mail" required>
+<input name="name" maxlength="64" class="form-control" placeholder="Имя" required>
+<textarea class="form-control" name="adress" placeholder="Адрес для доставки" maxlength="255"></textarea>
+<textarea class="form-control" name="contact" placeholder="Как с вами можно связаться?" maxlength="255" required></textarea>
+<p><input type="submit" class="btn btn-lg btn-success" value="Заказать"></p>
+</form>
+</div>

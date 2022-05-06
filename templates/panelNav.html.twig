@@ -1,0 +1,47 @@
+
+{% block navbar %}
+<title>Панель управления</title>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/panel/main">Keyhole CMS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/main">Главная</a>
+      </li>
+	  {% if rightsGeneral==true %}
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/general">Общая информация</a>
+      </li>
+	  {% endif %}
+	  {% if rightsArt==true %}
+      <li class="nav-item">
+        <a class="nav-link" href="/panel/articles">Статьи</a>
+      </li>
+	  {% endif %}
+	  {% if rightsCmsUsers==true %}
+	  <li class="nav-item">
+        <a class="nav-link" href="/panel/cmsusers">Пользователи ПУ</a>
+      </li>
+	  {% endif %}
+	  {% if rightsUsers==true %}
+	  <li class="nav-item">
+        <a class="nav-link" href="/panel/users">Пользователи магазина</a>
+      </li>
+	  {% endif %}
+	  {% if rightsGoods==true %}
+	  <li class="nav-item">
+        <a class="nav-link" href="/panel/goods">Товары</a>
+      </li>
+	  {% endif %}
+	  {% if rightsOrders==true %}
+	  <li class="nav-item">
+        <a class="nav-link" href="/panel/orders">Заказы</a>
+      </li>
+	  {% endif %}
+    </ul>
+  </div>
+</nav>
+{% endblock %}

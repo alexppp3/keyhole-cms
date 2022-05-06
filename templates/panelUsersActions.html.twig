@@ -1,0 +1,9 @@
+<div align="center">
+<a href="/panel/users/delete/{{ id }}" class="btn btn-lg btn-danger">Удалить пользователя</a>
+{% if blocked==false %}
+<a href="/panel/users/ban/{{ id }}" class="btn btn-lg btn-dark">Заблокировать</a>
+{% endif %}
+{% if blocked==true %}
+<a href="/panel/users/ban/{{ id }}?a=unban" class="btn btn-lg btn-light">Разблокировать</a>
+{% endif %}
+</div>

@@ -1,0 +1,39 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<style>
+input {
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+</style>
+<script>
+function photos() {
+var q = document.getElementById("q").value;
+var files = '<input name="img[]" type="file">'.repeat(q);
+document.getElementById("add").innerHTML = files;
+}
+</script>
+<div style="padding: 1%; width: 80%">
+<form method="post" action="/panel/articles/new/make" enctype="multipart/form-data">
+<input type="text" class="form-control" name="title" placeholder="Заголовок" maxlength="255">
+<textarea placeholder="Короткое описание" name="short" class="form-control" maxlength="255">
+</textarea>
+<textarea placeholder="Текст статьи" name="text" class="form-control">
+</textarea>
+<p><input type="radio" name="main" value="main">Фото статьи будет в карусели на главной странице</p>
+<p><input type="radio" name="main" value="submain">Превью статьи будет на главной</p>
+<p><input type="radio" name="main" value="none" checked>Обычная статья</p>
+<input class="form-control" id="q" placeholder="Кол-во добавляемых изображений"><input type="button" class="btn btn-lg btn-info" value="Далее" onclick="photos()">
+<div id="add">
+
+</div>
+<input type="submit" class="btn btn-lg btn-success" value="Создать статью">
+</form>
+</div>

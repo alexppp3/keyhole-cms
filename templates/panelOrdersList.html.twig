@@ -1,0 +1,83 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<script>
+function editState(id) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/orders/type/'+id, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Изменение статуса',
+	  html: '<form method="post" action="/panel/orders/state/'+id+'"><p style="color: red;"><input type="radio" name="state" value="1">Не обработан</p><p style="color: orange;"><input type="radio" name="state" value="2">Уточнён адрес</p><p style="color: lime;"><input type="radio" name="state" value="3">Отправлен в отработку</p><p style="color: green;"><input type="radio" name="state" value="4">Отработан</p><p><input type="radio" name="state" value="5"><b>Отбракован</b></p><input type="submit" class="btn btn-lg btn-success" value="Обновить статус"></form>',
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+function info(id) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/orders/info/'+id, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Информация о заказе',
+	  html: xhr.responseText,
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+</script>
+<title>Заказы</title>
+<div style="padding: 2%">
+{% if suc==1 %}
+<div class="alert alert-success">
+ Действие совершено успешно!
+</div>
+{% endif %}
+<table>
+<tr>
+<th>ID</th><th>ID пользователя</th><th>Подан</th><th>Состояние</th><th>Подробная информация</th>
+</tr>
+<tr>
+{% for order in orders %}
+<tr><td>{{ order.id }}</td><td>{{ order.userId }}{% if order.userId==false %}Подан без регистрации{% endif %}</td><td>{{ order.time|date("H:i:s d/m/Y") }}</td><td>
+{% if order.state==1 %}<b style="color: red;">Не обработан!</b>{% endif %}
+{% if order.state==2 %}<b style="color: orange;">Уточнен адрес</b>{% endif %}
+{% if order.state==3 %}<b style="color: lime;">Отправлен в отработку</b>{% endif %}
+{% if order.state==4 %}<b style="color: green;">Отработан</b>{% endif %}
+{% if order.state==5 %}<b>Отбракован</b>{% endif %} <button onclick="editState({{ order.id }});" class="btn btn-lg btn-success">Изменить статус заказа</button></td><td><button onclick="info({{ order.id }})" class="btn btn-lg btn-info">Подробности</button><a href="/panel/orders/delete/{{ order.id }}" class="btn btn-lg btn-danger">Удалить заказ</a></td></tr>
+{% endfor %}
+</tr>
+</table>
+<p><i>30 заказов на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/panel/users"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/panel/users?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/panel/users?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+</div>
+{% endif %}

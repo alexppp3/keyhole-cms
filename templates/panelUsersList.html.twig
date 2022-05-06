@@ -1,0 +1,78 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<script>
+function action(id) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/users/action/'+id, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Действия с пользователем',
+	  html: xhr.responseText,
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+function info(id) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/users/info/'+id, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Информация о пользователе',
+	  html: xhr.responseText,
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+</script>
+<title>Пользователи магазина</title>
+<div style="padding: 2%">
+{% if suc==1 %}
+<div class="alert alert-success">
+ Действие совершено успешно!
+</div>
+{% endif %}
+<table>
+<tr>
+<th>ID</th><th>E-mail</th><th>Имя</th><th>Действия</th><th>Подробная информация</th>
+</tr>
+<tr>
+{% for user in users %}
+<tr><td>{{ user.id }}</td><td>{{ user.email }}</td><td>{{ user.name }}</td><td><button onclick="action({{ user.id }});" class="btn btn-lg btn-danger">Удаление и блокировка</button></td><td><button onclick="info({{ user.id }})" class="btn btn-lg btn-info">Адрес и контакты</button></td></tr>
+{% endfor %}
+</tr>
+</table>
+<p><i>30 пользователей на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/panel/users"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/panel/users?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/panel/users?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/users?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/users?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+</div>
+{% endif %}

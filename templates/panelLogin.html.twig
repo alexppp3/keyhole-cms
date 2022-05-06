@@ -1,0 +1,28 @@
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+
+<title>Панель</title>
+
+<div style="padding: 10%" align="center">
+{% if error==true %}
+{% if error==1 %}
+<div class="alert alert-danger" role="alert">
+  Подождите 15 минут.
+</div>
+{% endif %}
+{% if error==2 %}
+<div class="alert alert-danger" role="alert">
+  Неправильный логин или пароль
+</div>
+{% endif %}
+{% endif %}
+<form action="/panel/login" method="POST">
+<input type="text" class="form-control" placeholder="Логин" name="login">
+<input type="password" class="form-control" placeholder="Пароль" name="password">
+<input type="submit" class="btn btn-lg btn-success form-control" value="Войти">
+</form>
+
+</div>

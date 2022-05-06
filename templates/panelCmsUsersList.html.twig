@@ -1,0 +1,91 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<script>
+function changepass(id) {
+swal.mixin({
+  input: 'password',
+  confirmButtonText: 'Далее',
+  showCancelButton: false,
+}).queue([
+  {
+    title: 'Введите новый пароль',
+  },
+]).then((result) => {
+  if (result.value) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '/panel/cmsusers/pass/'+id+'/'+JSON.stringify(result.value), false);
+	xhr.send();
+	if(xhr.responseText=='response:ok') { 
+	swal({
+      title: 'Пароль успешно изменён!',
+      confirmButtonText: 'ОК',
+	  type: 'success',
+    });
+	} else {
+    swal({
+      title: 'Не удалось изменить пароль',
+	  text: 'Код ошибки:' + xhr.responseText,
+      confirmButtonText: 'ОК',
+	  type: 'error',
+    });
+  }}
+})
+}
+function changerights(id) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/cmsusers/rights/'+id, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Права',
+	  html: xhr.responseText,
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+</script>
+<title>Пользователи ПУ</title>
+<div style="padding: 2%">
+<a href="/panel/cmsusers/new" class="btn btn-lg btn-success">Новый пользователь</a></br>
+<table>
+<tr>
+<th>ID</th><th>Логин</th><th>Последний раз заходил</th><th>Пароль</th><th>Права</th>
+</tr>
+<tr>
+{% for user in users %}
+<tr><td>{{ user.id }}</td><td>{{ user.login }}</td><td>{{ user.lastLogin }}</td><td><a onclick="changepass({{ user.id }});" class="btn btn-lg btn-warning">Изменить</a></td><td><a onclick="changerights({{ user.id }})" class="btn btn-lg btn-danger">Править</a></td></tr>
+{% endfor %}
+</tr>
+</table>
+<p><i>30 пользователей на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/panel/cmsusers"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/cmsusers?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/panel/cmsusers?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/cmsusers?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/cmsusers?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/panel/cmsusers?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/panel/cmsusers?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/cmsusers?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/cmsusers?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/cmsusers?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+{% endif %}
+</div>

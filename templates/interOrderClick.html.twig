@@ -1,0 +1,26 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 5%;">
+<h1>Покупка в 1 клик</h1>
+<div class="container">
+<div class="row">
+<div class="col-sm-4">{% if photo==true %}<img src="/static/{{ photo }}" width="250px" height="120px">{% endif %}</div><div class="col-sm">{{ good }}</div> <div class="col-sm">{{ price }} грн</div> <div class="col-sm">{{ quant }} шт.</div><div class="col-sm"><b>{{ price*quant }} грн.</b></div></div>
+<h2>Всего к оплате: {{ price*quant }} грн.</h2>
+</div>
+{% if user==false %}
+<a href="/login?g={{ goodId }}&q={{ quant }}" class="btn btn-lg btn-success">Войти и продолжить</a>
+<a href="/order/withoutreg/{{ goodId }}/{{ quant }}" class="btn btn-lg btn-info">Продолжить без регистрации</a>
+{% endif %}
+{% if user==true %}
+<a href="/order/finish/{{ goodId }}/{{ quant }}" class="btn btn-lg btn-success">Отправить заказ</a>
+<i>Данные заказа будет автоматически заполнены данными вашего <a href="/profile"> профиля.</a></i>
+{% endif %}
+</div>

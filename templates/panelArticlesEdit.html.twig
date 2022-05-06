@@ -1,0 +1,40 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<div style="padding: 1%; width: 80%">
+<a href="/panel/articles/delete/{{ id }}" class="btn btn-lg btn-danger">Удалить</a>
+<form method="post" action="/panel/articles/editlogic/{{ id }}">
+<input type="text" class="form-control" name="title" placeholder="Заголовок" value="{{ title }}" maxlength="255">
+<textarea placeholder="Короткое описание" name="short" class="form-control" maxlength="255">
+{% if short==true %}{{ short }}{% endif %}
+</textarea>
+<textarea placeholder="Текст статьи" name="text" class="form-control">
+{% if text==true %}{{ text }}{% endif %}
+</textarea>
+<p><input type="radio" name="main" value="main"{% if main=='main' %} checked{% endif %}>Фото статьи будет в карусели на главной странице</p>
+<p><input type="radio" name="main" value="submain"{% if main=='submain' %} checked{% endif %}>Превью статьи будет на главной</p>
+<p><input type="radio" name="main" value="none" {% if main=='none' %} checked{% endif %}>Обычная статья</p>
+{% set i=0 %}
+{% if photos!=false %}
+<div class="card-columns">
+{% for photo in photos %}
+<div class="card" style="width: 18rem;">
+<img class="card-img-top" src="/static/{{ photo }}">
+<div class="card-body">
+    <p class="card-text"><input type="checkbox" name="delete[]" value="{{ i }}"> Удалить изображение</p>
+  </div>
+ </div>
+{% set i=i+1 %}
+{% endfor %}
+</div>
+{% endif %}
+<input type="submit" class="btn btn-lg btn-success" value="Изменить статью">
+</form>
+
+</div>

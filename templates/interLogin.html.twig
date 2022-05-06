@@ -1,0 +1,34 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 10%;">
+{% if error==true %}
+{% if error==1 %}
+<div class="alert alert-danger" role="alert">
+  Неправильное заполнение!
+</div>
+{% endif %}
+{% if error==2 %}
+<div class="alert alert-danger" role="alert">
+  Неправильный логин или пароль!
+</div>
+{% endif %}
+{% if error==3 %}
+<div class="alert alert-success" role="alert">
+  <b>Регистрация успешна!</b> Теперь вы можете войти.
+</div>
+{% endif %}
+{% endif %}
+<form method="post" action="/login/logic">
+<input name="email" maxlength="32" class="form-control" placeholder="E-mail">
+<input name="password" type="password" maxlength="32" class="form-control" placeholder="Пароль">
+<p><input type="submit" class="btn btn-lg btn-success" value="Войти"> <a href="/register" class="btn btn-lg btn-info">Регистрация</a></p>
+</form>
+</div>

@@ -1,0 +1,50 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<style>
+input {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+</style>
+<script>
+function photos() {
+var q = document.getElementById("q").value;
+var files = '<input name="img[]" type="file">'.repeat(q);
+document.getElementById("add").innerHTML = files;
+}
+</script>
+<div style="padding: 1%; width: 80%">
+<form method="post" action="/panel/goods/new/make" enctype="multipart/form-data">
+<input type="text" class="form-control" name="name" placeholder="Название товара" maxlength="255" required>
+<input type="text" class="form-control" name="article" placeholder="Артикул" maxlength="255">
+<input type="text" class="form-control" name="size" placeholder="Размер" maxlength="255">
+<p><input type="radio" name="sex" value="man">Мужской</p>
+<p><input type="radio" name="sex" value="woman">Женский</p>
+<p><input type="radio" name="sex" value="u" checked>Унисекс/Неприменимо</p>
+<input type="text" class="form-control" name="collection" placeholder="Коллекция" maxlength="255">
+<input type="text" class="form-control" name="color" placeholder="Цвет" maxlength="255">
+<input type="text" class="form-control" name="type" placeholder="Тип" maxlength="255" required>
+<input type="number" class="form-control" name="price" placeholder="Цена" maxlength="255" required>
+<input type="number" class="form-control" name="quant" placeholder="Кол-во в наличии" maxlength="255" required>
+<textarea placeholder="Описание товара" name="description" class="form-control">
+</textarea>
+<textarea placeholder="Короткое описание" name="short" class="form-control" maxlength="255">
+</textarea>
+<p><input type="radio" name="state" value="1" checked>Товар в наличии/ожидается поставка</p>
+<p><input type="radio" name="state" value="2">Снят с производства</p>
+<p><input type="radio" name="state" value="3">Скрытый товар</p>
+<i>Примечание: В списке товаров будет отображаться только первое изображение, все остальные— только на странице товара.</i>
+<input class="form-control" id="q" placeholder="Кол-во добавляемых изображений"><input type="button" class="btn btn-lg btn-info" value="Далее" onclick="photos()">
+<div id="add">
+
+</div>
+<input type="submit" class="btn btn-lg btn-success" value="Создать товар">
+</form>
+</div>

@@ -1,0 +1,90 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<script>
+function buy() {
+	var quant = document.getElementById('quant').value;
+	if(!quant) {
+		var quant = 1;
+	}
+	document.location.href="/buy/{{ id }}/" + quant;
+}
+function addcart() {
+	var quant = document.getElementById('quant').value;
+	if(!quant) {
+		var quant = 1;
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "/cart/add/{{ id }}/" + quant, true);
+	xhr.send(null);
+	swal({
+	type: 'success',
+	text: 'Добавлено в корзину!'});
+}
+</script>
+
+<div align="center" style="width: 100%; margin-top: 5%;">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 5%">
+  <ol class="carousel-indicators">
+  {% set i=0 %}
+  {% for сar in carousel %}
+<li data-target="#carouselExampleIndicators" data-slide-to="{{ i }}" {% if i==0 %}class="active"{% endif %}></li>
+	{% set i=i+1 %}
+	{% endfor %}
+  </ol>
+<div class="carousel-inner" style="height: 550px; width: 800px;">
+{% set i=0 %}
+	{% for car in carousel %}
+<div class="carousel-item {% if i==0 %}active{% endif %}">
+ <img class="d-block w-100" width="800px" height="550px" src="/static/{{ car }}">
+</div>
+{% set i=i+1 %}
+	{% endfor %}
+
+</div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="background-color: #DCDCDC; width: 5%">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Назад</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" style="background-color: #DCDCDC; width: 5%">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Вперёд</span>
+  </a>
+</div>
+</div>
+<div align="center" style="padding: 5%;">
+<div align="left">
+<h1 style="margin-top: 1%; margin-bottom: 1%">{{ goodName }}</h1>
+<h2>{{ price }} грн.</h2>
+<div class="container">
+  <div class="row">
+  {% if size==true %}
+    <div class="col-sm">
+      <p>Размер: {{ size }}</p>
+    </div>
+	{% endif %}
+	{% if collection==true %}
+    <div class="col-sm">
+      <p>Коллекция: {{ collection }}</p>
+    </div>
+	{% endif %}
+	{% if color==true %}
+    <div class="col-sm">
+      <p>Цвет: {{ color }}</p>
+    </div>
+	{% endif %}
+  </div>
+</div>
+<p>{{ description }}</p>
+{% if q==0 and state==1 %}<h3 style="color: red;">Товара нет в наличии</h3>{% endif %}
+{% if state==2 %}<h3 style="color: gray;">Товар снят с производства</h3>{% endif %}
+<div width="30%"><input class="form-control" id="quant" placeholder="Количество"></div>
+<button onclick="addcart()" class="btn btn-lg btn-success">В корзину</button> <button onclick="buy()" class="btn btn-lg btn-info">Купить в 1 клик</button>
+</div>
+</div>

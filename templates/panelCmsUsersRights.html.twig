@@ -1,0 +1,50 @@
+Текущие права:
+<b>{% if rightsGeneral==true %}
+     Редактирование общей информации; 
+	  {% endif %}
+	  {% if rightsArt==true %}
+      Статьи; 
+	  {% endif %}
+	  {% if rightsCmsUsers==true %}
+	  Пользователи панели; 
+	  {% endif %}
+	  {% if rightsUsers==true %}
+	  Пользователи магазина; 
+	  {% endif %}
+	  {% if rightsGoods==true %}
+	  Товары; 
+	  {% endif %}
+	  {% if rightsOrders==true %}
+	  Заказы.
+	  {% endif %}
+</b><form action="/panel/cmsusers/rights/change/{{id}}" method="post">
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <input type="checkbox" id="general" name="rights[]"
+               value="general">
+        <label for="general">Общее</label></br>
+		<input type="checkbox" id="cmsusers" name="rights[]"
+               value="cmsUsers">
+        <label for="cmsusers">Польз. ПУ</label>
+    </div>
+    <div class="col-sm">
+      <input type="checkbox" id="art" name="rights[]"
+               value="art">
+        <label for="art">Статьи</label></br>
+		<input type="checkbox" id="users" name="rights[]"
+               value="users">
+        <label for="users">Польз.</label>
+    </div>
+    <div class="col-sm">
+      <input type="checkbox" id="goods" name="rights[]"
+               value="goods">
+        <label for="goods">Товары</label></br>
+		<input type="checkbox" id="orders" name="rights[]"
+               value="orders">
+        <label for="orders">Заказы</label>
+    </div>
+  </div>
+ <input type="submit" class="btn btn-lg btn-success form-control" value="Изменить">
+</div>
+</form>

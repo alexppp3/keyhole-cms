@@ -1,0 +1,38 @@
+{% if form==1 or form==5 %}
+<form action="/panel/general/changeEnt/{{form}}" method="post">
+<div align="center" style="padding: 2%">
+<p>Введите новое значение</p>
+<p><input type="text" name="new" class="form-control" placeholder="Новое значение"></p>
+<p><input type="submit" class="btn btn-lg btn-success" value="Изменить"></p>
+</div>
+</form>
+{% endif %}
+{% if form==2 %}
+<form action="/panel/general/changeEnt/2" method="post" enctype="multipart/form-data">
+<div align="center" style="padding: 2%">
+<p>Загрузите новый логотип</p>
+<input type="hidden" name="MAX_FILE_SIZE" value="15000000" />
+<p><input class="form-control-file" name="logo" type="file"></p>
+<p><input type="submit" class="btn btn-lg btn-success" value="Загрузить"></p>
+</div>
+</form>
+{% endif %}
+{% if form==3 %}
+<form action="/panel/general/changeEnt/3" method="post">
+<div align="center" style="padding: 2%">
+<p>Введите новое значение в формате <b>YYYY-MM-DD hh:mm</b> <i>(пример: 2010-12-31 23:59:59)</i></p>
+<p>или введите любую прошедшую дату(например, <b>1970-01-01 01:00:00</b>) для отключения техработ</p>
+<p><input type="text" name="time" class="form-control" placeholder="Время"></p>
+<p><input type="submit" class="btn btn-lg btn-success" value="Изменить"></p>
+</div>
+</form>
+{% endif %}
+{% if form==4 %}
+<form action="/panel/general/changeEnt/4" method="post">
+<div align="center" style="padding: 2%">
+<p>Введите ID пользователей через запятую</p>
+<p><input type="text" name="new" class="form-control" placeholder="ID пользователей"></p>
+<p><input type="submit" class="btn btn-lg btn-success" value="Изменить"></p>
+</div>
+</form>
+{% endif %}

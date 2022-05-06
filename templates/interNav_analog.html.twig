@@ -1,0 +1,45 @@
+{% block navbar %}
+<title>{{ title }}</title>
+<style>
+body {
+	background-color: black;
+	color: white;
+}
+.navbar {
+	postion: fixed;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	!important;
+	opacity: 100%;
+}
+.navbar-left {
+	align: left;
+} 
+#sidemenu {
+	align: right;
+	height: 100%;
+}
+a {
+	color: white;
+}
+</style>
+<div class="navbar">
+<a href="#" onclick="show();" id="menubut">Меню</a>
+<div class="navbar-left">
+<a href="/cart">Корзина</a> <a href="/login">Профиль</a>
+</div>
+</div>
+<div align="center" style="z-index: -1;">
+<a class="navbar-brand" href="/">
+  {% if logo==true %}<img src="/static/{{ logo }}">{% endif %}
+  {% if logo==false %}<b>{{ title }}</b>{% endif %}
+  </a>
+</div>
+<div id="sidemenu" style="display:none;">
+</br>
+<a href="/goods/man">Мужская одежда</a></br>
+<a href="/goods/woman">Женская одежда</a>
+<a></a>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<title>Панель управления</title>
+<script>
+function change(entity) {
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/panel/general/change/'+entity, false);
+xhr.send();
+if(xhr.responseText!='response:err') {
+swal({
+      title: 'Изменение',
+	  html: xhr.responseText,
+      confirmButtonText: 'Закрыть',
+	  confirmButtonColor: '#ff0000',
+    });
+}
+}
+</script>
+<div style="padding: 5%">
+<p><b>Заголовок сайта:</b> <i>{{ title }}</i> <button class="btn btn-lg btn-primary" onclick="change(1);">Изменить</button></p>
+<p><b>Название сайта:</b> <i>{{ name }}</i> <button class="btn btn-lg btn-success" onclick="change(5);">Изменить</button></p>
+<p><b>Логотип:</b> <img src="/static/{{ logo }}"> <button class="btn btn-lg btn-danger" onclick="change(2);">Изменить</button></p>
+<p>
+{% if closed=='false' %}
+<b>Технические работы не проводятся</b><button class="btn btn-lg btn-danger" onclick="change(3);">Закрыть на техрабты</button></p>
+{% endif %} 
+{% if closed!='false' %}
+<b>Технические работы до:</b> <i>{{ closed|date("Y-m-d H:i:s") }}</i><button class="btn btn-lg btn-success" onclick="change(3);">Изменить время техработ</button></p>
+{% endif %} 
+<p><b>ID telegram-операторов:</b> 
+<i>{% for operator in operators %}
+{{ operator }},
+{% endfor %} </i> <button class="btn btn-lg btn-info" onclick="change(4);">Править</button></p>
+</div>

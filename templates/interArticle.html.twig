@@ -1,0 +1,46 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 5%;">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 5%">
+  {% if carousel!=false %}
+  <ol class="carousel-indicators">
+  {% set i=0 %}
+  {% for сar in carousel %}
+<li data-target="#carouselExampleIndicators" data-slide-to="{{ i }}" {% if i==0 %}class="active"{% endif %}></li>
+	{% set i=i+1 %}
+	{% endfor %}
+  </ol>
+<div class="carousel-inner" style="height: 550px; width: 800px;">
+{% set i=0 %}
+	{% for car in carousel %}
+<div class="carousel-item {% if i==0 %}active{% endif %}">
+ <img class="d-block w-100" src="/static/{{ car }}">
+</div>
+{% set i=i+1 %}
+	{% endfor %}
+
+</div>
+{% endif %}
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Назад</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Вперёд</span>
+  </a>
+</div>
+<div align="left">
+<h1 style="margin-top: 1%; margin-bottom: 1%">{{ title }}</h1>
+<p style="color: gray;"><i>{{ time|date("H:i:s d/m/Y") }}</i></p>
+<p>{{ text }}</p>
+</div>
+</div>

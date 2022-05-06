@@ -1,0 +1,21 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 5%;">
+<div class="container">
+  <div class="row">
+{% for type in types %}
+<div class="col-sm">
+<a href="/goods/{{ sex }}/%7B%22type%22%3A%22{{ type['type'] }}%22%7D" class="btn btn-lg btn-light" style="font-size: 32pt;"> {{ type['type'] }} </a> 
+</div>
+{% endfor %}
+  </div>
+</div>
+</div>

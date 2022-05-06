@@ -1,0 +1,40 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<div style="padding: 1%">
+<form  class="input-group" method="get" action=""><input class="form-control" name="search" placeholder="Введите артикул" ><input type="submit" class="btn btn-md btn-success" value="Искать"></form>
+<a href="/panel/goods/new" class="btn btn-lg btn-success">Новый товар</a>
+<p><i>Для редактирования и просмотра товаров— кликните по названию</i></p>
+{% for good in goods %}
+<p><a href="/panel/goods/edit/{{good.id}}"><b>{{good.id}}</b> {{good.name}} (арт. <i>{{good.article}}</i>)</a> {{good.sex}} {{good.color}} {{good.type}} Размер: {{good.size}} {{good.collection}} <b>В наличии: {{good.quant}} шт.</b></p> 
+{% endfor %}
+<p><i>30 товаров на одной странице</i></p>
+{% if page==1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link active" href="/panel/goods"><b>1</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/goods?page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/panel/goods?page=3">3</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/goods?page=4">4</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/goods?page=5">5</a></li>
+  </ul>
+</nav>
+{% endif %}
+{% if page>1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="/panel/goods?page={{ page-1 }}">{{ page-1 }}</a></li>
+    <li class="page-item"><a class="page-link active" href="/panel/goods?page={{ page }}"><b>{{ page }}</b></a></li>
+    <li class="page-item"><a class="page-link" href="/panel/goods?page={{ page+1 }}">{{ page+1 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/goods?page={{ page+2 }}">{{ page+2 }}</a></li>
+	<li class="page-item"><a class="page-link" href="/panel/goods?page={{ page+3 }}">{{ page+3 }}</a></li>
+  </ul>
+</nav>
+{% endif %}
+</div>

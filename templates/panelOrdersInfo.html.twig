@@ -1,0 +1,20 @@
+<div class="alert alert-light" style="color: black;">
+<b>Артикулы:</b></br>{% for art in articles %}
+<b>{{art.a}}</b>: {{art.q}} шт.*{{art.price}}=<b>{{ art.q*art.price}} грн.</b></br>
+{% endfor %}</br>
+<b>Общая сумма:</b>{{ sum }} грн.
+</div>
+<div class="alert alert-light" style="color: black;">
+{% if name==true %}<b>Имя:</b> {{ name }} </br>{% endif %}
+<b>Адрес:</b></br>
+{{ adress }}{% if adress!=true %}Уточняйте адрес{% endif %}
+</br>
+<form method="post" action="/panel/orders/add/{{ id }}">
+<textarea class="form-control" placeholder="Примечания" name="add">{{ comment }}</textarea>
+<input type="submit" class="btn btn-lg btn-success" value="Добавить примечание">
+</form>
+</div>
+<div class="alert alert-light" style="color: black;">
+<b>Контакты:</b></br>{{ contact }}
+</div>
+</br>

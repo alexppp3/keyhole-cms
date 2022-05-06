@@ -1,0 +1,40 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 5%;">
+<h1>Корзина</h1>
+<div class="container">
+{% if goods==true and goods[0]==true %}
+{% set i=0 %}
+<form action="/cart/delete" method="post">
+<input type="submit" class="btn btn-lg btn-danger" value="Удалить выбранное">
+{% for good in goods %}
+{% set photo = good['photo']|json_arr() %}
+<div class="row">
+<div class="col-sm-4">{% if photo==true %}<img src="/static/{{ photo[0] }}" width="250px" height="120px">{% endif %}</div><div class="col-sm">{{ good['name'] }}</div> <div class="col-sm">{{ good['price'] }} грн</div> <div class="col-sm">{{ good['quant'] }} шт.</div><div class="col-sm"><b>{{ good['price']*good['quant'] }} грн.</b></div>
+<div class="col-sm"><input type="checkbox" name="delete[]" value="{{ i }}">Удалить</div></div>
+{% set i=i+1 %}
+{% endfor %}
+</div>
+</form>
+<h2>Всего к оплате: {{ sum }} грн.</h2>
+{% if user==false %}
+<a href="/login?cart=true" class="btn btn-lg btn-success">Войти и продолжить</a>
+<a href="/order/withoutreg/" class="btn btn-lg btn-info">Продолжить без регистрации</a>
+{% endif %}
+{% if user==true %}
+<a href="/order/finish/" class="btn btn-lg btn-success">Отправить заказ</a>
+<i>Данные заказа будет автоматически заполнены данными вашего <a href="/profile"> профиля.</a></i>
+{% endif %}
+{% endif %}
+{% if goods==false or goods[0]==false %}
+<h1>Ваша корзина пуста!</h1>
+{% endif %}
+</div>

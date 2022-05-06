@@ -1,0 +1,33 @@
+{% use '/interNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+
+<div align="center" style="padding: 10%;">
+<h1>Добрый день, {{ username }}</h1>
+<h3>{{ email }}</h3>
+<form action="/profile/edit" method="post">
+{% if error==true %}
+{% if error==1 %}
+<div class="alert alert-danger" role="alert">
+  Поле "Контакты" обязательно для заполнения!
+</div>
+{% endif %}
+{% if error==2 %}
+<div class="alert alert-danger" role="alert">
+  Неправильное заполнение!
+</div>
+{% endif %}
+{% endif %}
+<p>Адрес:</p>
+<textarea class="form-control" name="adress" placeholder="Адрес" maxlength="500">{% if adress==true %}{{ adress }}{% endif %}</textarea>
+<p>Контакты:</p>
+<textarea class="form-control" name="contact" placeholder="Контакты" maxlength="500" required>{{ contact }}</textarea>
+<input type="submit" class="btn btn-lg btn-success" value="Изменить">
+</form>
+</div>

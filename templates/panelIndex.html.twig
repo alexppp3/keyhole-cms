@@ -1,0 +1,67 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<title>Панель управления</title>
+<div class="card-columns" style="padding: 1%">
+	{% if rightsGeneral==true %}
+      
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Общая информация</h5>
+      <p class="card-text">Логотип, название, закрытие доступа...</p>
+	  <a class="btn btn-lg btn-primary" href="/panel/general">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+	  {% if rightsArt==true %}
+      <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Статьи</h5>
+      <p class="card-text">Статьи на сайте, титульные фото...</p>
+	  <a class="btn btn-lg btn-info" href="/panel/articles">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+	  {% if rightsCmsUsers==true %}
+	  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Пользователи панели</h5>
+      <p class="card-text">Пользователи панели управления</p>
+	  <a class="btn btn-lg btn-warning" href="/panel/cmsusers">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+	  {% if rightsUsers==true %}
+	 <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Пользователи сайта</h5>
+      <p class="card-text">Обычные пользователи</p>
+	  <a class="btn btn-lg btn-danger" href="/panel/users">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+	  {% if rightsGoods==true %}
+	  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Товары</h5>
+      <p class="card-text">Управление товарами</p>
+	  <a class="btn btn-lg btn-success" href="/panel/goods">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+	  {% if rightsOrders==true %}
+	  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Заказы</h5>
+      <p class="card-text">Информация о заказах</p>
+	  <a class="btn btn-lg btn-dark" href="/panel/orders">Перейти</a>
+    </div>
+  </div>
+	  {% endif %}
+</div>

@@ -1,0 +1,67 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<style>
+input {
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+</style>
+<script>
+function photos() {
+var q = document.getElementById("q").value;
+var files = '<input name="img[]" type="file">'.repeat(q);
+document.getElementById("add").innerHTML = files;
+}
+</script>
+<div style="padding: 1%; width: 80%">
+<a href="/panel/goods/delete/{{ id }}" class="btn btn-lg btn-danger">Удалить</a>
+<form method="post" action="/panel/goods/editlogic/{{ id }}"  enctype="multipart/form-data">
+<input type="text" class="form-control" name="name" placeholder="Название товара" maxlength="255" value="{{ name }}" required>
+<input type="text" class="form-control" name="article" placeholder="Артикул" maxlength="255" value="{{ article }}">
+<input type="text" class="form-control" name="size" placeholder="Размер" maxlength="255" value="{{ size }}">
+<p><input type="radio" name="sex" value="man"{% if sex=='man' %} checked{% endif %}>Мужской</p>
+<p><input type="radio" name="sex" value="woman"{% if sex=='woman' %} checked{% endif %}>Женский</p>
+<p><input type="radio" name="sex" value="u"{% if sex=='u' %} checked{% endif %}>Унисекс/Неприменимо</p>
+<input type="text" class="form-control" name="collection" placeholder="Коллекция" maxlength="255" value="{{ collection }}">
+<input type="text" class="form-control" name="color" placeholder="Цвет" maxlength="255" value="{{ color }}">
+<input type="text" class="form-control" name="type" placeholder="Тип" maxlength="255" value="{{ type }}" required>
+<input type="text" class="form-control" name="price" placeholder="Цена" maxlength="255" value="{{ price }}" required>
+<input type="number" class="form-control" name="quant" placeholder="Кол-во в наличии" maxlength="255" value="{{ quant }}" required>
+<p><input type="radio" name="state" value="1"{% if state==1 %} checked{% endif %}>Товар в наличии/ожидается поставка</p>
+<p><input type="radio" name="state" value="2"{% if state==2 %} checked{% endif %}>Снят с производства</p>
+<p><input type="radio" name="state" value="3"{% if state==3 %} checked{% endif %}>Скрытый товар</p>
+<textarea placeholder="Описание товара" name="description" class="form-control">
+{% if description==true %}{{ description }}{% endif %}
+</textarea>
+<textarea placeholder="Короткое описание" name="short" class="form-control" maxlength="255">
+{% if short==true %}{{ short }}{% endif %}
+</textarea>
+{% set i=0 %}
+{% if photos!=false %}
+<div class="card-columns">
+{% for photo in photos %}
+<div class="card" style="width: 18rem;">
+<img class="card-img-top" src="/static/{{ photo }}">
+<div class="card-body">
+    <p class="card-text"><input type="checkbox" name="delete[]" value="{{ i }}"> Удалить изображение</p>
+  </div>
+  </div>
+{% set i=i+1 %}
+{% endfor %}
+</div>
+{% endif %}
+<input class="form-control" id="q" placeholder="Кол-во добавляемых изображений"><input type="button" class="btn btn-lg btn-info" value="Далее" onclick="photos()">
+<div id="add">
+
+</div>
+<input type="submit" class="btn btn-lg btn-success" value="Изменить товар">
+</form>
+
+</div>

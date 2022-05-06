@@ -1,0 +1,47 @@
+{% use '/panelNav.html.twig' %}
+{% use '/service.html.twig' %}
+
+{% block meta %}
+{{ parent() }}
+{% endblock %}
+{% block navbar %}
+{{ parent() }}
+{% endblock %}
+<title>Пользователи ПУ</title>
+<div style="padding: 2%">
+<div style="width: 60%">
+<form method="post" action="">
+<input class="form-control" name="login" placeholder="Логин" required>
+<input class="form-control" name="password" placeholder="Пароль" type="password" required>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <input type="checkbox" id="general" name="rights[]"
+               value="general">
+        <label for="general">Общая информация</label></br>
+		<input type="checkbox" id="cmsusers" name="rights[]"
+               value="cmsUsers">
+        <label for="cmsusers">Пользователи ПУ</label>
+    </div>
+    <div class="col-sm">
+      <input type="checkbox" id="art" name="rights[]"
+               value="art">
+        <label for="art">Статьи</label></br>
+		<input type="checkbox" id="users" name="rights[]"
+               value="users">
+        <label for="users">Пользователи</label>
+    </div>
+    <div class="col-sm">
+      <input type="checkbox" id="goods" name="rights[]"
+               value="goods">
+        <label for="goods">Товары</label></br>
+		<input type="checkbox" id="orders" name="rights[]"
+               value="orders">
+        <label for="orders">Заказы</label>
+    </div>
+  </div>
+ <input type="submit" class="btn btn-lg btn-success form-control" value="Создать">
+</div>
+</form>
+</div>
+</div>
